@@ -83,13 +83,12 @@ namespace databaseTransactions
                             {
                                 string tx = $"INSERT INTO employees(FirstName, LastName, Gender, Department) VALUES (\"{entry.firstName}\", \"{entry.lastName}\", \"{entry.gender}\", \"{entry.department}\")";
                                 connection.Execute(tx);
-
-                                var query = "SELECT * FROM Employees";
-                                var list = connection.Query<Employee>(query).ToList();
-                                Employees = list;
-
-                                RefreshDataGrid();
                             }
+                            var query = "SELECT * FROM Employees";
+                            var list = connection.Query<Employee>(query).ToList();
+                            Employees = list;
+
+                            RefreshDataGrid();
                         }
                         break;
                     }
@@ -105,18 +104,72 @@ namespace databaseTransactions
                 editMode = false;
                 this.Height = wHeight;
                 editGroup.Hide();
+                editDataBtn.Text = "edit";
             }
             else if (!editMode)
             {
                 editMode = true;
                 this.Height = wHeight + 200;
                 editGroup.Show();
+                editDataBtn.Text = "close editor";
             }
         }
         private void editDataBtn_Click(object sender, EventArgs e)
         {
-            switchEditModeAndResize();
+            try
+            {
+                switchEditModeAndResize();
+                var selectedRow = dataGrid.SelectedRows[0].DataBoundItem as Employee;
+                editGroup.Text = $"editing employee {selectedRow.employeeId.ToString()}";
+                editEmployeeId.Text = selectedRow.employeeId.ToString();
+                editFirstNameTB.Text = selectedRow.firstName;
+                editLastNameTB.Text = selectedRow.lastName;
+                editGenderF.Checked = selectedRow.gender == "F";
+                editGenderM.Checked = selectedRow.gender == "M";
+                editDepartmentTB.Text = selectedRow.department;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
+        }
+
+        private void editConfirmBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int employeeId = int.Parse(editEmployeeId.Text);
+                string firstName = editFirstNameTB.Text;
+                string lastName = editLastNameTB.Text;
+                string gender = editGenderM.Checked ? "M" : (editGenderF.Checked ? "F" : "");
+                string department = editDepartmentTB.Text;
+
+                switch (this.databaseType)
+                {
+                    case "MySQL":
+                        {
+                            var connection = new MySqlConnection(this.connectionString);
+
+                            using (connection)
+                            {
+                                string tx = $"UPDATE employees SET firstName = \"{firstName}\", lastName = \"{lastName}\", gender = \"{gender}\", department = \"{department}\" WHERE employeeId = {employeeId}";
+                                connection.Execute(tx);
+
+                                var query = "SELECT * FROM Employees";
+                                var list = connection.Query<Employee>(query).ToList();
+                                Employees = list;
+
+                                RefreshDataGrid();
+                            }
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

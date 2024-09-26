@@ -33,6 +33,8 @@
             editDataBtn = new Button();
             addDataBtn = new Button();
             editGroup = new GroupBox();
+            editDeleteBtn = new Button();
+            editConfirmBtn = new Button();
             editGenderF = new RadioButton();
             editGenderM = new RadioButton();
             editDepartmentTB = new TextBox();
@@ -42,6 +44,7 @@
             editGenderLabel = new Label();
             editLastNameLabel = new Label();
             editFirstNameLabel = new Label();
+            editEmployeeId = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             editGroup.SuspendLayout();
             SuspendLayout();
@@ -92,6 +95,9 @@
             // 
             // editGroup
             // 
+            editGroup.Controls.Add(editEmployeeId);
+            editGroup.Controls.Add(editDeleteBtn);
+            editGroup.Controls.Add(editConfirmBtn);
             editGroup.Controls.Add(editGenderF);
             editGroup.Controls.Add(editGenderM);
             editGroup.Controls.Add(editDepartmentTB);
@@ -108,10 +114,34 @@
             editGroup.TabStop = false;
             editGroup.Text = "editing employee 0";
             // 
+            // editDeleteBtn
+            // 
+            editDeleteBtn.BackColor = Color.DarkRed;
+            editDeleteBtn.BackgroundImageLayout = ImageLayout.None;
+            editDeleteBtn.FlatAppearance.BorderColor = Color.Red;
+            editDeleteBtn.FlatStyle = FlatStyle.Popup;
+            editDeleteBtn.ForeColor = SystemColors.Control;
+            editDeleteBtn.Location = new Point(8, 148);
+            editDeleteBtn.Name = "editDeleteBtn";
+            editDeleteBtn.Size = new Size(118, 28);
+            editDeleteBtn.TabIndex = 9;
+            editDeleteBtn.Text = "delete row";
+            editDeleteBtn.UseVisualStyleBackColor = false;
+            // 
+            // editConfirmBtn
+            // 
+            editConfirmBtn.Location = new Point(456, 148);
+            editConfirmBtn.Name = "editConfirmBtn";
+            editConfirmBtn.Size = new Size(118, 28);
+            editConfirmBtn.TabIndex = 6;
+            editConfirmBtn.Text = "confirm";
+            editConfirmBtn.UseVisualStyleBackColor = true;
+            editConfirmBtn.Click += editConfirmBtn_Click;
+            // 
             // editGenderF
             // 
             editGenderF.AutoSize = true;
-            editGenderF.Location = new Point(409, 95);
+            editGenderF.Location = new Point(65, 95);
             editGenderF.Name = "editGenderF";
             editGenderF.Size = new Size(61, 19);
             editGenderF.TabIndex = 8;
@@ -122,7 +152,7 @@
             // editGenderM
             // 
             editGenderM.AutoSize = true;
-            editGenderM.Location = new Point(294, 95);
+            editGenderM.Location = new Point(8, 95);
             editGenderM.Name = "editGenderM";
             editGenderM.Size = new Size(51, 19);
             editGenderM.TabIndex = 7;
@@ -132,9 +162,9 @@
             // 
             // editDepartmentTB
             // 
-            editDepartmentTB.Location = new Point(8, 149);
+            editDepartmentTB.Location = new Point(132, 95);
             editDepartmentTB.Name = "editDepartmentTB";
-            editDepartmentTB.Size = new Size(566, 23);
+            editDepartmentTB.Size = new Size(442, 23);
             editDepartmentTB.TabIndex = 6;
             // 
             // editLastNameTB
@@ -154,7 +184,7 @@
             // editDepartmentLabel
             // 
             editDepartmentLabel.AutoSize = true;
-            editDepartmentLabel.Location = new Point(6, 131);
+            editDepartmentLabel.Location = new Point(132, 77);
             editDepartmentLabel.Name = "editDepartmentLabel";
             editDepartmentLabel.Size = new Size(69, 15);
             editDepartmentLabel.TabIndex = 3;
@@ -163,7 +193,7 @@
             // editGenderLabel
             // 
             editGenderLabel.AutoSize = true;
-            editGenderLabel.Location = new Point(8, 97);
+            editGenderLabel.Location = new Point(8, 77);
             editGenderLabel.Name = "editGenderLabel";
             editGenderLabel.Size = new Size(44, 15);
             editGenderLabel.TabIndex = 2;
@@ -187,11 +217,22 @@
             editFirstNameLabel.TabIndex = 0;
             editFirstNameLabel.Text = "first name";
             // 
+            // editEmployeeId
+            // 
+            editEmployeeId.AutoSize = true;
+            editEmployeeId.Enabled = false;
+            editEmployeeId.Location = new Point(132, 155);
+            editEmployeeId.Name = "editEmployeeId";
+            editEmployeeId.Size = new Size(13, 15);
+            editEmployeeId.TabIndex = 10;
+            editEmployeeId.Text = "0";
+            editEmployeeId.Visible = false;
+            // 
             // DatabaseManagement
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(604, 450);
+            ClientSize = new Size(604, 651);
             Controls.Add(editGroup);
             Controls.Add(addDataBtn);
             Controls.Add(editDataBtn);
@@ -223,5 +264,8 @@
         private TextBox editDepartmentTB;
         private TextBox editLastNameTB;
         private TextBox editFirstNameTB;
+        private Button editDeleteBtn;
+        private Button editConfirmBtn;
+        private Label editEmployeeId;
     }
 }
