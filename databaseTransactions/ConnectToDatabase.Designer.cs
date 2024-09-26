@@ -71,12 +71,11 @@
             // 
             dbTypeSel.DropDownStyle = ComboBoxStyle.DropDownList;
             dbTypeSel.FormattingEnabled = true;
-            dbTypeSel.Items.AddRange(new object[] { "SQL Server", "MySQL", "SQLite (Memory)" });
+            dbTypeSel.Items.AddRange(new object[] { "MySQL", "SQL Server" });
             dbTypeSel.Location = new Point(12, 56);
             dbTypeSel.Name = "dbTypeSel";
             dbTypeSel.Size = new Size(263, 23);
             dbTypeSel.TabIndex = 3;
-            dbTypeSel.SelectedIndexChanged += dbTypeSel_SelectedIndexChanged;
             // 
             // connStrTB
             // 

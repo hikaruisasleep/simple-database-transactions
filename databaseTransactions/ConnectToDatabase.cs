@@ -7,16 +7,6 @@ namespace databaseTransactions
             InitializeComponent();
         }
 
-        private void dbTypeSel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox cmb = (ComboBox)sender;
-
-            if (cmb.Text == "SQLite (Memory)")
-            {
-                connStrTB.Enabled = false;
-            }
-        }
-
         private void connectButton_Click(object sender, EventArgs e)
         {
             try
@@ -25,16 +15,13 @@ namespace databaseTransactions
 
                 switch (dbTypeSel.Text)
                 {
-                    case "SQLite (Memory)":
-                        MessageBox.Show("SQLite compat in progress", "SQLite", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                    case "SQL Server":
-                        throw new Exception("MSSQLS compat in progress");
                     case "MySQL":
                         {
                             ChangeForm("MySQL", connectionString);
                         }
                         break;
+                    case "SQL Server":
+                        throw new Exception("MSSQLS compat in progress");
                     default:
                         throw new Exception("Invalid database type");
                 }
