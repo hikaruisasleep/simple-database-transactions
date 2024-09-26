@@ -33,6 +33,7 @@
             editDataBtn = new Button();
             addDataBtn = new Button();
             editGroup = new GroupBox();
+            editEmployeeId = new Label();
             editDeleteBtn = new Button();
             editConfirmBtn = new Button();
             editGenderF = new RadioButton();
@@ -44,7 +45,6 @@
             editGenderLabel = new Label();
             editLastNameLabel = new Label();
             editFirstNameLabel = new Label();
-            editEmployeeId = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGrid).BeginInit();
             editGroup.SuspendLayout();
             SuspendLayout();
@@ -114,6 +114,17 @@
             editGroup.TabStop = false;
             editGroup.Text = "editing employee 0";
             // 
+            // editEmployeeId
+            // 
+            editEmployeeId.AutoSize = true;
+            editEmployeeId.Enabled = false;
+            editEmployeeId.Location = new Point(132, 155);
+            editEmployeeId.Name = "editEmployeeId";
+            editEmployeeId.Size = new Size(13, 15);
+            editEmployeeId.TabIndex = 10;
+            editEmployeeId.Text = "0";
+            editEmployeeId.Visible = false;
+            // 
             // editDeleteBtn
             // 
             editDeleteBtn.BackColor = Color.DarkRed;
@@ -127,6 +138,7 @@
             editDeleteBtn.TabIndex = 9;
             editDeleteBtn.Text = "delete row";
             editDeleteBtn.UseVisualStyleBackColor = false;
+            editDeleteBtn.Click += editDeleteBtn_Click;
             // 
             // editConfirmBtn
             // 
@@ -216,17 +228,6 @@
             editFirstNameLabel.Size = new Size(60, 15);
             editFirstNameLabel.TabIndex = 0;
             editFirstNameLabel.Text = "first name";
-            // 
-            // editEmployeeId
-            // 
-            editEmployeeId.AutoSize = true;
-            editEmployeeId.Enabled = false;
-            editEmployeeId.Location = new Point(132, 155);
-            editEmployeeId.Name = "editEmployeeId";
-            editEmployeeId.Size = new Size(13, 15);
-            editEmployeeId.TabIndex = 10;
-            editEmployeeId.Text = "0";
-            editEmployeeId.Visible = false;
             // 
             // DatabaseManagement
             // 

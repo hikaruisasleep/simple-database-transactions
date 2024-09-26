@@ -165,11 +165,51 @@ namespace databaseTransactions
                         }
                         break;
                 }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            switchEditModeAndResize();
+        }
+
+        private void editDeleteBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                if (MessageBox.Show("Are you sure you want to delete this row?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
+                {
+                    int employeeId = int.Parse(editEmployeeId.Text);
+
+                    switch (this.databaseType)
+                    {
+                        case "MySQL":
+                            {
+                                var connection = new MySqlConnection(this.connectionString);
+
+                                using (connection)
+                                {
+                                    string tx = $"DELETE FROM employees WHERE employeeId = {employeeId}";
+                                    connection.Execute(tx);
+
+                                    var query = "SELECT * FROM Employees";
+                                    var list = connection.Query<Employee>(query).ToList();
+                                    Employees = list;
+
+                                    RefreshDataGrid();
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            switchEditModeAndResize();
         }
     }
 }
