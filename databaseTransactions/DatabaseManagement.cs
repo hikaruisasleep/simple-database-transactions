@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace databaseTransactions
@@ -46,6 +47,30 @@ namespace databaseTransactions
                         }
                     }
                     break;
+                case "SQL Server":
+                    {
+                        var connection = new SqlConnection(this.connectionString);
+
+                        string tableCreation = """
+                            IF OBJECT_ID(N'employees', N'U') IS NULL
+                                CREATE TABLE employees (
+                                    EmployeeID INT PRIMARY KEY NOT NULL IDENTITY(0,1),
+                                    FirstName VARCHAR(255) NOT NULL,
+                                    LastName VARCHAR(255) NOT NULL,
+                                    Gender VARCHAR(1) NOT NULL,
+                                    Department VARCHAR(255) NOT NULL
+                                );
+                        """;
+                        var create = connection.Execute(tableCreation);
+
+                        using (connection)
+                        {
+                            var query = "SELECT * FROM employees";
+                            var list = connection.Query<Employee>(query).ToList();
+                            Employees = list;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -81,7 +106,7 @@ namespace databaseTransactions
                         {
                             foreach (Employee entry in entries)
                             {
-                                string tx = $"INSERT INTO employees(FirstName, LastName, Gender, Department) VALUES (\"{entry.firstName}\", \"{entry.lastName}\", \"{entry.gender}\", \"{entry.department}\")";
+                                string tx = $"INSERT INTO employees (FirstName, LastName, Gender, Department) VALUES (\"{entry.firstName}\", \"{entry.lastName}\", \"{entry.gender}\", \"{entry.department}\")";
                                 connection.Execute(tx);
                             }
                             var query = "SELECT * FROM Employees";
@@ -90,8 +115,27 @@ namespace databaseTransactions
 
                             RefreshDataGrid();
                         }
-                        break;
                     }
+                    break;
+                case "SQL Server":
+                    {
+                        var connection = new SqlConnection(this.connectionString);
+
+                        using (connection)
+                        {
+                            foreach (Employee entry in entries)
+                            {
+                                string tx = $"INSERT INTO employees(FirstName, LastName, Gender, Department) VALUES('{entry.firstName}', '{entry.lastName}', '{entry.gender}', '{entry.department}')";
+                                connection.Execute(tx);
+                            }
+                            var query = "SELECT * FROM Employees";
+                            var list = connection.Query<Employee>(query).ToList();
+                            Employees = list;
+
+                            RefreshDataGrid();
+                        }
+                    }
+                    break;
             }
             return true;
         }
@@ -164,6 +208,23 @@ namespace databaseTransactions
                             }
                         }
                         break;
+                    case "SQL Server":
+                        {
+                            var connection = new SqlConnection(this.connectionString);
+
+                            using (connection)
+                            {
+                                string tx = $"UPDATE employees SET firstName = '{firstName}', lastName = '{lastName}', gender = '{gender}', department = '{department}' WHERE employeeId = {employeeId}";
+                                connection.Execute(tx);
+
+                                var query = "SELECT * FROM Employees";
+                                var list = connection.Query<Employee>(query).ToList();
+                                Employees = list;
+
+                                RefreshDataGrid();
+                            }
+                        }
+                        break;
                 }
 
             }
@@ -188,6 +249,23 @@ namespace databaseTransactions
                         case "MySQL":
                             {
                                 var connection = new MySqlConnection(this.connectionString);
+
+                                using (connection)
+                                {
+                                    string tx = $"DELETE FROM employees WHERE employeeId = {employeeId}";
+                                    connection.Execute(tx);
+
+                                    var query = "SELECT * FROM Employees";
+                                    var list = connection.Query<Employee>(query).ToList();
+                                    Employees = list;
+
+                                    RefreshDataGrid();
+                                }
+                            }
+                            break;
+                        case "SQL Server":
+                            {
+                                var connection = new SqlConnection(this.connectionString);
 
                                 using (connection)
                                 {

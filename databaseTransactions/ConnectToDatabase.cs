@@ -12,19 +12,7 @@ namespace databaseTransactions
             try
             {
                 string connectionString = connStrTB.Text;
-
-                switch (dbTypeSel.Text)
-                {
-                    case "MySQL":
-                        {
-                            ChangeForm("MySQL", connectionString);
-                        }
-                        break;
-                    case "SQL Server":
-                        throw new Exception("MSSQLS compat in progress");
-                    default:
-                        throw new Exception("Invalid database type");
-                }
+                ChangeForm(dbTypeSel.Text, connectionString);
             }
             catch (Exception ex)
             {

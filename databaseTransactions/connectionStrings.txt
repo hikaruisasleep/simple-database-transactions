@@ -1,2 +1,5 @@
 ﻿MySQL
 Server=localhost;database=dapper;Uid=root;Pwd=;Charset=utf8;Port=3306;
+
+SQL Server
+Server=LAPTOP-JUTBN7NJ\SQLSERVER;User Id=LAPTOP-JUTBN7NJ/LENOVO;Database=dapper;Integrated Security=True;TrustServerCertificate=True;
